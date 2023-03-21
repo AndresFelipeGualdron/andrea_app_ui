@@ -15,6 +15,6 @@ jobs:
       - name: Build the Flutter app
         run: flutter build web --web-renderer canvaskit --release
       - name: Deploy to GitHub Pages
-        uses: erickzanardo/flutter-gh-pages@v7
+        uses: bluefireteam/flutter-gh-pages@v7
         with:
           baseHref: /andrea_app_ui/
