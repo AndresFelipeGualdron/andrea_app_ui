@@ -18,3 +18,4 @@ jobs:
         uses: bluefireteam/flutter-gh-pages@v7
         with:
           baseHref: /andrea_app_ui/
+          webRenderer: canvaskit
