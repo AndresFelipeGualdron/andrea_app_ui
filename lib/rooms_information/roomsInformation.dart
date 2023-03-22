@@ -29,19 +29,24 @@ class RoomsInformationState extends State<RoomsInformation> {
     });
     String nameRoom = myControllerFieldText.value.text;
 
-    Response response = await AndreaAppService.getViewersOfRoom(nameRoom);
+    try {
+      Response response = await AndreaAppService.getViewersOfRoom(nameRoom);
 
-    if (response.statusCode == 200) {
-      answer = true;
+      if (response.statusCode == 200) {
+        answer = true;
 
-      setState(() {
-        _users = response.statusCode != 200 ||
-            jsonDecode(response.body)["members"] == null
-            ? [] : jsonDecode(response.body)["members"];
-      });
-    } else {
+        setState(() {
+          _users = response.statusCode != 200 ||
+              jsonDecode(response.body)["members"] == null
+              ? [] : jsonDecode(response.body)["members"];
+        });
+      } else {
+        answer = false;
+      }
+    } catch (e) {
       answer = false;
     }
+
 
     setState(() {
       _isLoading = false;
@@ -78,9 +83,14 @@ class RoomsInformationState extends State<RoomsInformation> {
       _isLoading = true;
     });
 
-    final response = await AndreaAppService.sendFriendRequest(user, userId);
+    try {
+      final response = await AndreaAppService.sendFriendRequest(user, userId);
 
-    answer = response.statusCode == 200;
+      answer = response.statusCode == 200;
+    } catch (e) {
+      answer = false;
+    }
+
 
     setState(() {
       _isLoading = false;

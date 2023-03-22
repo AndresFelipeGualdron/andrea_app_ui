@@ -27,9 +27,14 @@ class FriendRequestState extends State<FriendRequest> {
       _isLoading = true;
     });
 
-    Response response = await AndreaAppService.sendOneFriendRequest(userName);
+    try {
+      Response response = await AndreaAppService.sendOneFriendRequest(userName);
 
-    answer = response.statusCode == 200;
+      answer = response.statusCode == 200;
+    } catch (e) {
+      answer = false;
+    }
+
 
     setState(() {
       _isLoading = false;
@@ -44,10 +49,14 @@ class FriendRequestState extends State<FriendRequest> {
     setState(() {
       _isLoading = true;
     });
+    try {
+      Response response = await AndreaAppService.chaseModelsUsers();
 
-    Response response = await AndreaAppService.chaseModelsUsers();
+      answer = response.statusCode == 200;
+    } catch (e) {
+      answer = false;
+    }
 
-    answer = response.statusCode == 200;
 
     setState(() {
       _isLoading = false;
@@ -116,10 +125,10 @@ class FriendRequestState extends State<FriendRequest> {
                           }
                     });
                   },
-                  child: const Text("Enviar solicitudes en masa"),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.purple)
                   ),
+                  child: const Text("Enviar solicitudes en masa"),
                 ),
               ],
             ),
