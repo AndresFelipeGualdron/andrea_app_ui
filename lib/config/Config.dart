@@ -19,15 +19,12 @@ class Config {
   }
 
   Future<void> initSettings() async {
-
-    if (globalConfigs["endpoints"]["andrea-app"] == "") {
-      final url = Uri.parse("https://raw.githubusercontent.com/gualdronsito/scripts/main/andrea-app-config.json");
-      http.Response response = await http.get(url).timeout(const Duration(seconds: 5));
-      if(response.statusCode == 200) {
-        dynamic object = jsonDecode(response.body);
-        globalConfigs["endpoints"]["andrea-app"] = object["endpoints"]["andreaApp"];
-        globalConfigs["endpoints"]["ngrok"] = object["endpoints"]["ngrok"];
-      }
+    final url = Uri.parse("https://raw.githubusercontent.com/gualdronsito/scripts/main/andrea-app-config.json");
+    http.Response response = await http.get(url).timeout(const Duration(seconds: 5));
+    if(response.statusCode == 200) {
+      dynamic object = jsonDecode(response.body);
+      globalConfigs["endpoints"]["andrea-app"] = object["endpoints"]["andreaApp"];
+      globalConfigs["endpoints"]["ngrok"] = object["endpoints"]["ngrok"];
     }
   }
 

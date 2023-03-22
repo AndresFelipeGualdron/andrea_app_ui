@@ -18,7 +18,7 @@ class RoomsInformation extends StatefulWidget {
 
 class RoomsInformationState extends State<RoomsInformation> {
   final ScrollController _scrollController = ScrollController();
-  final myController = TextEditingController();
+  final myControllerFieldText = TextEditingController();
   List<dynamic> _users = [];
   bool _isLoading = false;
 
@@ -27,7 +27,7 @@ class RoomsInformationState extends State<RoomsInformation> {
     setState(() {
       _isLoading = true;
     });
-    String nameRoom = myController.value.text;
+    String nameRoom = myControllerFieldText.value.text;
 
     Response response = await AndreaAppService.getViewersOfRoom(nameRoom);
 
@@ -72,7 +72,7 @@ class RoomsInformationState extends State<RoomsInformation> {
   }
 
   Future<bool> sendFriendRequest(String user, int userId) async {
-    final completer = Completer<bool>();
+    bool answer = false;
 
     setState(() {
       _isLoading = true;
@@ -80,17 +80,13 @@ class RoomsInformationState extends State<RoomsInformation> {
 
     final response = await AndreaAppService.sendFriendRequest(user, userId);
 
-    if(response.statusCode == 200) {
-      completer.complete(true);
-    } else {
-      completer.complete(false);
-    }
+    answer = response.statusCode == 200;
 
     setState(() {
       _isLoading = false;
     });
 
-    return completer.future;
+    return answer;
   }
 
   void showSuccessMessage(BuildContext context) {
@@ -123,7 +119,7 @@ class RoomsInformationState extends State<RoomsInformation> {
                   border: OutlineInputBorder(),
                   hintText: "Room name"
               ),
-              controller: myController,
+              controller: myControllerFieldText,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),

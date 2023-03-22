@@ -18,12 +18,7 @@ class AndreaAppService {
       "option": "getViewers",
       "roomName": roomName
     };
-    http.Response response = await http.post(
-        url,
-        headers: headers,
-        body: jsonEncode(body)
-    ).timeout(const Duration(seconds: 15));
-    return Future.value(response);
+    return await http.post(url, headers: headers, body: jsonEncode(body));
   }
 
   static Future<http.Response> sendFriendRequest(String user, int userId) async {
@@ -36,13 +31,26 @@ class AndreaAppService {
       "friendName": user
     };
 
-    http.Response response = await http.post(
-        url,
-        headers: headers,
-        body: jsonEncode(body)
-    ).timeout(const Duration(seconds: 15));
+    return await http.post(url, headers: headers, body: jsonEncode(body));
+  }
 
-    return response;
+  static Future<http.Response> sendOneFriendRequest(String userName) async {
+    await config.initSettings();
+    final url = Uri.parse(config.globalConfigs["endpoints"]["andrea-app"]);
+    final headers = {'Content-Type': 'application/json'};
+    final body = {
+      "option": "sendOneFriendRequest",
+      "friendName": userName
+    };
+
+    return await http.post(url, headers: headers, body: jsonEncode(body));
+
+  }
+
+  static Future<http.Response> chaseModelsUsers() async {
+    await config.initSettings();
+    final url = Uri.parse("${config.globalConfigs['endpoints']['ngrok']}?profundidad=20");
+    return await http.post(url);
   }
 
 }

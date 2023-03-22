@@ -50,11 +50,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  final String title = "Andrea App";
-  final String titleMenu = "Menú";
-  final String roomsInformation = "Información de rooms";
-  final String friendRequests = "Manejo solicitudes de amsitad";
 
+  final String titleMenu = "Menú";
+
+  final List<String> _titles = ["Información de rooms", "Manejo solicitudes de amsitad"];
   int _page = 0;
 
   void changePage(context, int page) {
@@ -78,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title),),
+      appBar: AppBar(title: Text(_titles[_page]),),
       body: bodyFunction(),
       drawer: Drawer(
         child: ListView(
@@ -91,13 +90,13 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text(titleMenu),
             ),
             ListTile(
-              title: Text(roomsInformation),
+              title: Text(_titles[0]),
               onTap: () {
                 changePage(context, 0);
               },
             ),
             ListTile(
-              title: Text(friendRequests),
+              title: Text(_titles[1]),
               onTap: () {
                 changePage(context, 1);
               },
